@@ -26,7 +26,7 @@ struct EnvironmentInfo {
 
         let countryCode: String?
         if #available(iOS 16, *) {
-            countryCode = Locale.current.region?.identifier
+            countryCode = Locale.current.region?.identifier.capitalized
         } else {
             countryCode = ""
         }
