@@ -16,6 +16,7 @@ struct EnvironmentInfo {
     var osVersion = ""
     var locale = ""
     var appVersion = ""
+    var countryCode = ""
     var appBuildNumber = ""
     var deviceModel = ""
 
@@ -23,12 +24,20 @@ struct EnvironmentInfo {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let appBuildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
 
+        let countryCode: String?
+        if #available(iOS 16, *) {
+            countryCode = Locale.current.region?.identifier
+        } else {
+            countryCode = ""
+        }
+
         return EnvironmentInfo(
             isDebug: isDebug,
             osName: osName,
             osVersion: osVersion,
             locale: Locale.current.languageCode ?? "",
             appVersion: appVersion ?? "",
+            countryCode: countryCode ?? "",
             appBuildNumber: appBuildNumber ?? "",
             deviceModel: deviceModel
         )

@@ -13,6 +13,7 @@ struct Event: Encodable {
         var osName: String
         var osVersion: String
         var appVersion: String
+        var countryCode: String
         var appBuildNumber: String
         var sdkVersion: String
         var deviceModel: String

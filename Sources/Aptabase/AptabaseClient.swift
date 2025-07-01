@@ -36,6 +36,7 @@ class AptabaseClient {
                             osName: env.osName,
                             osVersion: env.osVersion,
                             appVersion: env.appVersion,
+                            countryCode: env.countryCode,
                             appBuildNumber: env.appBuildNumber,
                             sdkVersion: AptabaseClient.sdkVersion,
                             deviceModel: env.deviceModel
