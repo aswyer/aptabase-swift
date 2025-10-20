@@ -41,7 +41,9 @@ class AptabaseClient {
                             deviceModel: env.deviceModel
                         ),
                         props: props)
-        dispatcher.enqueue(evt)
+        Task {
+            await dispatcher.enqueue(evt)
+        }
     }
 
     public func startPolling() {

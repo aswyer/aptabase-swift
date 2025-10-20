@@ -48,15 +48,15 @@ final class EventDispatcherTests: XCTestCase {
     }
     
     func testFlushSingleItem() async {
-        dispatcher.enqueue(newEvent("app_started"))
-        
+        await dispatcher.enqueue(newEvent("app_started"))
+
         await dispatcher.flush()
         XCTAssertEqual(session.requestCount, 1)
     }
 
     func testFlushMultipleCalls() async {
         for i in 0...50 {
-            dispatcher.enqueue(newEvent("app_event_\(i)"))
+            await dispatcher.enqueue(newEvent("app_event_\(i)"))
         }
 
         await withTaskGroup { group in
@@ -70,10 +70,10 @@ final class EventDispatcherTests: XCTestCase {
     }
 
     func testFlushShouldBatchMultipleItems() async {
-        dispatcher.enqueue(newEvent("app_started"))
-        dispatcher.enqueue(newEvent("item_created"))
-        dispatcher.enqueue(newEvent("item_deleted"))
-        
+        await dispatcher.enqueue(newEvent("app_started"))
+        await dispatcher.enqueue(newEvent("item_created"))
+        await dispatcher.enqueue(newEvent("item_deleted"))
+
         await dispatcher.flush()
         XCTAssertEqual(session.requestCount, 1)
         
@@ -82,10 +82,10 @@ final class EventDispatcherTests: XCTestCase {
     }
     
     func testFlushShouldRetryAfterFailure() async {
-        dispatcher.enqueue(newEvent("app_started"))
-        dispatcher.enqueue(newEvent("item_created"))
-        dispatcher.enqueue(newEvent("item_deleted"))
-        
+        await dispatcher.enqueue(newEvent("app_started"))
+        await dispatcher.enqueue(newEvent("item_created"))
+        await dispatcher.enqueue(newEvent("item_deleted"))
+
         
         session.statusCode = 500
         await dispatcher.flush()
