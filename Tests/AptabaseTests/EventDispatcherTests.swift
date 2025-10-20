@@ -53,7 +53,22 @@ final class EventDispatcherTests: XCTestCase {
         await dispatcher.flush()
         XCTAssertEqual(session.requestCount, 1)
     }
-    
+
+    func testFlushMultipleCalls() async {
+        for i in 0...50 {
+            dispatcher.enqueue(newEvent("app_event_\(i)"))
+        }
+
+        await withTaskGroup { group in
+            group.addTask { [self] in
+                await dispatcher.flush()
+            }
+            group.addTask { [self] in
+                await dispatcher.flush()
+            }
+        }
+    }
+
     func testFlushShouldBatchMultipleItems() async {
         dispatcher.enqueue(newEvent("app_started"))
         dispatcher.enqueue(newEvent("item_created"))
