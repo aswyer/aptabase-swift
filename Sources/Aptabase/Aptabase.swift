@@ -101,7 +101,7 @@ public class Aptabase: NSObject {
 
     /// Forces all queued events to be sent to the server. Returns after the events have been sent.
     public func flush() async {
-        await self.client?.flush()
+        await client?.flush()
     }
 
     private func enqueueEvent(_ eventName: String, with props: [String: AnyCodableValue] = [:]) {
